@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "geyser-group-link",
+	"version": "${version}",
+	"name": "Geyser Group Link",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/geyser-group-link/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"cc.dingemans.bigibas123.geyser.group.link.GeyserGroupLink"
+		],
+		"client": [
+			"cc.dingemans.bigibas123.geyser.group.link.GeyserGroupLinkClient"
+		],
+		"fabric-datagen": [
+			"cc.dingemans.bigibas123.geyser.group.link.GeyserGroupLinkDataGenerator"
+		]
+	},
+	"mixins": [
+		"geyser-group-link.mixins.json",
+		{
+			"config": "geyser-group-link.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.4",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
