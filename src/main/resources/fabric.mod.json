@@ -1,44 +1,32 @@
 {
 	"schemaVersion": 1,
-	"id": "geyser-group-link",
+	"id": "${mod_id}",
 	"version": "${version}",
 	"name": "Geyser Group Link",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"description": "Sorts users into luckperms groups depending on their platform",
 	"authors": [
-		"Me!"
+		"bigibas123"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/bigibas123/geyser-group-link"
 	},
-	"license": "CC0-1.0",
+	"license": "",
 	"icon": "assets/geyser-group-link/icon.png",
-	"environment": "*",
+	"environment": "server",
 	"entrypoints": {
 		"main": [
 			"cc.dingemans.bigibas123.geyser.group.link.GeyserGroupLink"
-		],
-		"client": [
-			"cc.dingemans.bigibas123.geyser.group.link.GeyserGroupLinkClient"
-		],
-		"fabric-datagen": [
-			"cc.dingemans.bigibas123.geyser.group.link.GeyserGroupLinkDataGenerator"
 		]
 	},
 	"mixins": [
-		"geyser-group-link.mixins.json",
-		{
-			"config": "geyser-group-link.client.mixins.json",
-			"environment": "client"
-		}
 	],
 	"depends": {
-		"fabricloader": ">=0.16.10",
-		"minecraft": "~1.21.4",
-		"java": ">=21",
-		"fabric-api": "*"
+		"fabricloader": ">=${loader_version}",
+		"minecraft": "~${minecraft_version}",
+		"fabric-api": "*",
+		"floodgate": "^${floodgate_version}",
+		"luckperms": "^${luckperms_version}"
 	},
 	"suggests": {
-		"another-mod": "*"
 	}
 }
