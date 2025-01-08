@@ -11,14 +11,8 @@ base {
 }
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
-    maven {
-        url = uri("https://repo.opencollab.dev/main/")
-    }
+    maven { url = uri("https://repo.opencollab.dev/main/") }
+    maven { url = uri("https://api.modrinth.com/maven") }
 }
 
 loom {
@@ -48,6 +42,12 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     compileOnly "org.geysermc.floodgate:api:${project.floodgate_version}"
     compileOnly "net.luckperms:api:${project.luckperms_version}"
+
+    modImplementation include ("maven.modrinth:midnightlib:${project.midnightlib_version}")
+
+    compileOnly  "org.projectlombok:lombok:${project.lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
+
 }
 
 processResources {
@@ -56,7 +56,8 @@ processResources {
             "minecraft_version": project.minecraft_version,
             "loader_version": project.loader_version,
             "floodgate_version": project.floodgate_version,
-            "luckperms_version": project.luckperms_version
+            "luckperms_version": project.luckperms_version,
+            "midnightlib_version": project.midnightlib_version
     )
 
 
@@ -66,7 +67,8 @@ processResources {
                 "minecraft_version": project.minecraft_version,
                 "loader_version": project.loader_version,
                 "floodgate_version": project.floodgate_version,
-                "luckperms_version": project.luckperms_version
+                "luckperms_version": project.luckperms_version,
+                "midnightlib_version": project.midnightlib_version
     }
 }
 
