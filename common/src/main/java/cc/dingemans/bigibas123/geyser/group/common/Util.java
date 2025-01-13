@@ -1,4 +1,4 @@
-package cc.dingemans.bigibas123.geyser.group.link;
+package cc.dingemans.bigibas123.geyser.group.common;
 
 import lombok.experimental.UtilityClass;
 import net.luckperms.api.LuckPermsProvider;

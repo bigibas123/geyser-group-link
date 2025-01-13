@@ -9,4 +9,7 @@ pluginManagement {
     }
 }
 
-include  'fabric'
+include 'fabric'
+include 'velocity'
+include 'common'
+

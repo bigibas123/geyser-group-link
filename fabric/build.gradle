@@ -35,6 +35,7 @@ processResources {
     inputs.properties(
             "loader_version": project.loader_version,
             "midnightlib_version": project.midnightlib_version)
+    loadProps(inputs.&properties)
     filesMatching("fabric.mod.json") {
         expand(inputs.properties)
     }

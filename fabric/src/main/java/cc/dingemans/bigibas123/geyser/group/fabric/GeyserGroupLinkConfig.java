@@ -1,4 +1,4 @@
-package cc.dingemans.bigibas123.geyser.group.link;
+package cc.dingemans.bigibas123.geyser.group.fabric;
 
 
 import eu.midnightdust.lib.config.MidnightConfig;

@@ -13,15 +13,16 @@ allprojects {
     base {
         archivesName = project.archives_base_name + "-" + project.name
     }
-
-    processResources {
-        inputs.properties(
+    ext.loadProps = { func ->
+        func(
                 "mod_id": project.archives_base_name + "-" + project.name,
                 "version": project.version,
                 "pretty_name": project.pretty_name,
+                "authors": project.authors,
                 "minecraft_version": project.minecraft_version,
                 "floodgate_version": project.floodgate_version,
-                "luckperms_version": project.luckperms_version
+                "luckperms_version": project.luckperms_version,
+                "slf4j_version": project.slf4j_version
         )
     }
 
@@ -32,6 +33,11 @@ allprojects {
 
         compileOnly "org.projectlombok:lombok:${project.lombok_version}"
         annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
+
+        implementation "org.slf4j:slf4j-api:${project.slf4j_version}"
+        if(project.name != "common"){
+            implementation project(':common')
+        }
     }
 
     tasks.withType(JavaCompile).configureEach {

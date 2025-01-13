@@ -5,7 +5,7 @@
 	"name": "${pretty_name}",
 	"description": "Sorts users into luckperms groups depending on their platform",
 	"authors": [
-		"bigibas123"
+		${authors}
 	],
 	"contact": {
 		"sources": "https://github.com/bigibas123/geyser-group-link"
@@ -15,7 +15,7 @@
 	"environment": "server",
 	"entrypoints": {
 		"server": [
-			"cc.dingemans.bigibas123.geyser.group.link.GeyserGroupLink"
+			"cc.dingemans.bigibas123.geyser.group.fabric.GeyserGroupLink"
 		]
 	},
 	"mixins": [
