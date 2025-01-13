@@ -6,6 +6,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class GeyserGroupLinkConfig{
-    private String bedrockGroupName = "";
-    private String javaGroupName = "";
+    private String bedrockGroupName;
+    private String javaGroupName;
 }

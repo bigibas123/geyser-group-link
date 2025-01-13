@@ -19,7 +19,7 @@ public class ConfigLoader {
         return config;
     }
 
-    public GeyserGroupLinkConfig loadConfig(Path filePath) {
+    public void loadConfig(Path filePath) {
         if (config == null) {
             if (filePath.toFile().exists()) {
                 Toml toml = new Toml().read(filePath.toFile());
@@ -34,7 +34,6 @@ public class ConfigLoader {
                 }
             }
         }
-        return config;
     }
 
 }

@@ -8,7 +8,6 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
-import com.velocitypowered.api.proxy.ProxyServer;
 import org.slf4j.Logger;
 
 import java.nio.file.Path;
@@ -25,12 +24,10 @@ import java.nio.file.Path;
 )
 public class GeyserGroupLink {
 
-    private final ProxyServer server;
     private final Logger logger;
     private final Path dataDirectory;
 
-    private GeyserGroupLink(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
-        this.server = server;
+    private GeyserGroupLink(Logger logger, @DataDirectory Path dataDirectory) {
         this.logger = logger;
         this.dataDirectory = dataDirectory;
     }
