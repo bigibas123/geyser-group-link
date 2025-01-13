@@ -2,7 +2,7 @@
 	"schemaVersion": 1,
 	"id": "${mod_id}",
 	"version": "${version}",
-	"name": "Geyser Group Link",
+	"name": "${pretty_name}",
 	"description": "Sorts users into luckperms groups depending on their platform",
 	"authors": [
 		"bigibas123"
@@ -14,7 +14,7 @@
 	"icon": "assets/geyser-group-link/icon.png",
 	"environment": "server",
 	"entrypoints": {
-		"main": [
+		"server": [
 			"cc.dingemans.bigibas123.geyser.group.link.GeyserGroupLink"
 		]
 	},
