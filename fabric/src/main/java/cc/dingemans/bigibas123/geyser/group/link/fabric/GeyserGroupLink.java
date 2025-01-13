@@ -1,8 +1,9 @@
-package cc.dingemans.bigibas123.geyser.group.fabric;
+package cc.dingemans.bigibas123.geyser.group.link.fabric;
 
-import eu.midnightdust.lib.config.MidnightConfig;
+import cc.dingemans.bigibas123.geyser.group.link.common.ConfigLoader;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +13,7 @@ public class GeyserGroupLink implements DedicatedServerModInitializer {
 
     @Override
     public void onInitializeServer() {
-        MidnightConfig.init(MOD_ID, GeyserGroupLinkConfig.class);
+        ConfigLoader.loadConfig(FabricLoader.getInstance().getConfigDir().resolve(MOD_ID + ".toml"));
         ServerPlayConnectionEvents.JOIN.register(new PlayerJoinEventHandler(LOGGER));
         LOGGER.info("Initialized {}", MOD_ID);
     }

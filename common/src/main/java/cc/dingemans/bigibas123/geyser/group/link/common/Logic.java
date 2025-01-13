@@ -1,4 +1,4 @@
-package cc.dingemans.bigibas123.geyser.group.common;
+package cc.dingemans.bigibas123.geyser.group.link.common;
 
 import lombok.experimental.UtilityClass;
 import net.luckperms.api.LuckPermsProvider;
@@ -12,7 +12,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @UtilityClass
-public class Util {
+public class Logic {
 
     @EnsuresNonNullIf(expression = "#1", result = true)
     public boolean isNotEmpty(String groupName) {
@@ -20,7 +20,10 @@ public class Util {
     }
 
 
-    public CompletableFuture<Void> modifyUserGroups(UUID uuid, Logger logger, String bedrockGroup, String javaGroup) {
+    public CompletableFuture<Void> modifyUserGroups(UUID uuid, Logger logger) {
+        var config = ConfigLoader.getConfig();
+        var javaGroup = config.getJavaGroupName();
+        var bedrockGroup = config.getBedrockGroupName();
         CompletableFuture<?>[] futures = new CompletableFuture<?>[2];
         if (FloodgateApi.getInstance().isFloodgatePlayer(uuid)) {
             futures[0] = (removeGroupIfPresent(javaGroup, uuid, logger));
@@ -32,7 +35,7 @@ public class Util {
         return CompletableFuture.allOf(futures);
     }
 
-    public CompletableFuture<Void> removeGroupIfPresent(String group, @NonNull UUID player, @NonNull Logger logger) {
+    private CompletableFuture<Void> removeGroupIfPresent(String group, @NonNull UUID player, @NonNull Logger logger) {
         if (isNotEmpty(group)) {
             return LuckPermsProvider.get().getUserManager().modifyUser(player, user -> {
                 InheritanceNode n = InheritanceNode.builder().group(group).build();
@@ -45,7 +48,7 @@ public class Util {
         }
     }
 
-    public CompletableFuture<Void> addGroupIfPresent(String group, @NonNull UUID player, @NonNull Logger logger) {
+    private CompletableFuture<Void> addGroupIfPresent(String group, @NonNull UUID player, @NonNull Logger logger) {
         if (isNotEmpty(group)) {
             return LuckPermsProvider.get().getUserManager().modifyUser(player, user -> {
                 InheritanceNode n = InheritanceNode.builder().group(group).build();

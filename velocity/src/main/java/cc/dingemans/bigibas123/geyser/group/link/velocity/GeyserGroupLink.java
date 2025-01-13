@@ -1,11 +1,17 @@
 package cc.dingemans.bigibas123.geyser.group.link.velocity;
 
-import com.google.inject.Inject;
+import cc.dingemans.bigibas123.geyser.group.link.common.ConfigLoader;
+import cc.dingemans.bigibas123.geyser.group.link.common.Logic;
+import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.annotation.DataDirectory;
+import com.velocitypowered.api.proxy.ProxyServer;
 import org.slf4j.Logger;
+
+import java.nio.file.Path;
 
 @Plugin(
         id = BuildConstants.MODID,
@@ -19,12 +25,24 @@ import org.slf4j.Logger;
 )
 public class GeyserGroupLink {
 
-    @Inject
-    private Logger logger;
+    private final ProxyServer server;
+    private final Logger logger;
+    private final Path dataDirectory;
+
+    private GeyserGroupLink(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
+        this.server = server;
+        this.logger = logger;
+        this.dataDirectory = dataDirectory;
+    }
 
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+        ConfigLoader.loadConfig(dataDirectory.resolve(BuildConstants.MODID + ".toml"));
+    }
 
+    @Subscribe
+    public void onLogin(LoginEvent event) {
+        Logic.modifyUserGroups(event.getPlayer().getUniqueId(), logger);
     }
 }

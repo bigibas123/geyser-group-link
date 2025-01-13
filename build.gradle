@@ -1,8 +1,14 @@
-allprojects {
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow' version '9.0.0-beta4'
+}
+
+subprojects {
     version = project.mod_version
     group = project.maven_group
     plugins.apply 'java'
     plugins.apply 'maven-publish'
+    plugins.apply 'com.gradleup.shadow'
 
     repositories {
         mavenCentral()
@@ -22,7 +28,8 @@ allprojects {
                 "minecraft_version": project.minecraft_version,
                 "floodgate_version": project.floodgate_version,
                 "luckperms_version": project.luckperms_version,
-                "slf4j_version": project.slf4j_version
+                "slf4j_version": project.slf4j_version,
+                "toml_version": project.toml_version
         )
     }
 
@@ -34,8 +41,11 @@ allprojects {
         compileOnly "org.projectlombok:lombok:${project.lombok_version}"
         annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
 
-        implementation "org.slf4j:slf4j-api:${project.slf4j_version}"
-        if(project.name != "common"){
+        compileOnly "org.slf4j:slf4j-api:${project.slf4j_version}"
+
+        implementation "com.moandjiezana.toml:toml4j:${project.toml_version}"
+
+        if (project.name != "common") {
             implementation project(':common')
         }
     }
@@ -55,5 +65,27 @@ allprojects {
         from("LICENSE") {
             rename { "${it}_${project.base.archivesName.get()}" }
         }
+    }
+
+    shadowJar {
+        dependencies {
+            include(project(':common'))
+            include(dependency("com.moandjiezana.toml:toml4j:${project.toml_version}"))
+        }
+    }
+}
+
+java {
+    withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}
+
+shadowJar {
+    dependencies {
+        include(project(':common'))
+        include(project(':fabric'))
+        include(project(':velocity'))
     }
 }

@@ -1,6 +1,6 @@
-package cc.dingemans.bigibas123.geyser.group.fabric;
+package cc.dingemans.bigibas123.geyser.group.link.fabric;
 
-import cc.dingemans.bigibas123.geyser.group.common.Util;
+import cc.dingemans.bigibas123.geyser.group.link.common.Logic;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.MinecraftServer;
@@ -20,6 +20,6 @@ public class PlayerJoinEventHandler implements ServerPlayConnectionEvents.Join {
             logger.error("Player object is null");
             return;
         }
-        Util.modifyUserGroups(handler.player.getUuid(), logger, GeyserGroupLinkConfig.bedrockGroupName, GeyserGroupLinkConfig.javaGroupName).join();
+        Logic.modifyUserGroups(handler.player.getUuid(), logger).join();
     }
 }

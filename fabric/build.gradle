@@ -27,14 +27,12 @@ dependencies {
 
     // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    modImplementation include("maven.modrinth:midnightlib:${project.midnightlib_version}")
 
 }
 
 processResources {
     inputs.properties(
-            "loader_version": project.loader_version,
-            "midnightlib_version": project.midnightlib_version)
+            "loader_version": project.loader_version,)
     loadProps(inputs.&properties)
     filesMatching("fabric.mod.json") {
         expand(inputs.properties)
