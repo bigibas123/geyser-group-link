@@ -2,6 +2,7 @@ package cc.dingemans.bigibas123.geyser.group.link.velocity;
 
 import cc.dingemans.bigibas123.geyser.group.link.common.ConfigLoader;
 import cc.dingemans.bigibas123.geyser.group.link.common.Logic;
+import com.google.inject.Inject;
 import com.velocitypowered.api.event.connection.LoginEvent;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
@@ -27,6 +28,7 @@ public class GeyserGroupLink {
     private final Logger logger;
     private final Path dataDirectory;
 
+    @Inject
     private GeyserGroupLink(Logger logger, @DataDirectory Path dataDirectory) {
         this.logger = logger;
         this.dataDirectory = dataDirectory;
