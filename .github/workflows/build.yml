@@ -17,18 +17,16 @@ jobs:
       - name: make gradle wrapper executable
         run: chmod +x ./gradlew
       - name: build
-        run: ./gradlew shadowJar sourcesJar
+        run: ./gradlew shadowJar
       - name: Upload fabric jars
         uses: actions/upload-artifact@v4
         with:
           name: Fabric
           if-no-files-found: error
-          path: |
-            fabric/build/libs/*
-            fabric/build/devlibs/*
+          path: "fabric/build/libs/*.jar"
       - name: Upload velocity jars
         uses: actions/upload-artifact@v4
         with:
           name: Velocity
           if-no-files-found: error
-          path: "velocity/build/libs/*"
+          path: "velocity/build/libs/*.jar"
