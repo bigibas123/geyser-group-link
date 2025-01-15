@@ -30,8 +30,6 @@ jobs:
           arguments: build
           execution-only-caches: true
           concurrent: true
-      - name: Build
-        run: ./gradlew build
       - name: Upload combined jar
         uses: actions/upload-artifact@v4
         with:
