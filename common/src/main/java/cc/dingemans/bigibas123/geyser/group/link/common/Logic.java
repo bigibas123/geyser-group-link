@@ -14,12 +14,6 @@ import java.util.concurrent.CompletableFuture;
 @UtilityClass
 public class Logic {
 
-    @EnsuresNonNullIf(expression = "#1", result = true)
-    public boolean isNotEmpty(String groupName) {
-        return groupName != null && !groupName.isEmpty();
-    }
-
-
     public CompletableFuture<Void> modifyUserGroups(UUID uuid, Logger logger) {
         var config = ConfigLoader.getConfig();
         var javaGroup = config.getJavaGroupName();
@@ -40,7 +34,7 @@ public class Logic {
             return LuckPermsProvider.get().getUserManager().modifyUser(player, user -> {
                 InheritanceNode n = InheritanceNode.builder().group(group).build();
                 user.transientData().remove(n);
-                logger.info("Removing {} from {} using {}", player, group, n);
+                logger.debug("Removing {} from {} using {}", player, group, n);
             });
         } else {
             logger.debug("Not removing empty group name for player [{}]", player);
@@ -53,7 +47,7 @@ public class Logic {
             return LuckPermsProvider.get().getUserManager().modifyUser(player, user -> {
                 InheritanceNode n = InheritanceNode.builder().group(group).build();
                 user.transientData().add(n);
-                logger.info("Adding {} to {} using {}", player, group, n);
+                logger.debug("Adding {} to {} using {}", player, group, n);
             });
 
         } else {
@@ -61,4 +55,10 @@ public class Logic {
             return CompletableFuture.completedFuture(null);
         }
     }
+
+    @EnsuresNonNullIf(expression = "#1", result = true)
+    public boolean isNotEmpty(String groupName) {
+        return groupName != null && !groupName.isEmpty();
+    }
+
 }

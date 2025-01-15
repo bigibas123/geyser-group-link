@@ -21,13 +21,17 @@ public class ConfigLoader {
 
     public void loadConfig(Path filePath) {
         if (config == null) {
-            if (filePath.toFile().exists()) {
+            if (filePath.toFile().exists() && !filePath.toFile().isDirectory()) {
                 Toml toml = new Toml().read(filePath.toFile());
                 config = toml.to(GeyserGroupLinkConfig.class);
             } else {
                 config = new GeyserGroupLinkConfig("bedrock", "java");
                 TomlWriter toml = new TomlWriter();
                 try {
+                    if (filePath.toFile().isDirectory()) {
+                        filePath.toFile().delete();
+                    }
+                    filePath.getParent().toFile().mkdirs();
                     toml.write(config, filePath.toFile());
                 } catch (IOException e) {
                     throw new RuntimeException(e);

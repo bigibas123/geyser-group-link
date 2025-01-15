@@ -1,17 +1,24 @@
 package cc.dingemans.bigibas123.geyser.group.link.fabric;
 
+import cc.dingemans.bigibas123.geyser.group.link.common.ConfigLoader;
 import cc.dingemans.bigibas123.geyser.group.link.common.Logic;
+import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class PlayerJoinEventHandler implements ServerPlayConnectionEvents.Join {
-    private final Logger logger;
+public class GeyserGroupLink implements DedicatedServerModInitializer, ServerPlayConnectionEvents.Join {
+    public final Logger logger = LoggerFactory.getLogger(BuildConstants.MODID);
 
-    public PlayerJoinEventHandler(Logger logger) {
-        this.logger = logger;
+    @Override
+    public void onInitializeServer() {
+        ConfigLoader.loadConfig(FabricLoader.getInstance().getConfigDir().resolve(BuildConstants.MODID + ".toml"));
+        ServerPlayConnectionEvents.JOIN.register(this);
+        logger.info("Initialized {} ({})", BuildConstants.PRETTY_NAME, BuildConstants.MODID);
     }
 
     @Override
@@ -22,4 +29,5 @@ public class PlayerJoinEventHandler implements ServerPlayConnectionEvents.Join {
         }
         Logic.modifyUserGroups(handler.player.getUuid(), logger).join();
     }
+
 }

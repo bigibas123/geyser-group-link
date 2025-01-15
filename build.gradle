@@ -1,91 +1,48 @@
 plugins {
-    id 'java'
-    id 'com.gradleup.shadow' version '9.0.0-beta4'
+    id 'fabric-loom' version '1.9-SNAPSHOT'
 }
 
-subprojects {
-    version = project.mod_version
-    group = project.maven_group
-    plugins.apply 'java'
-    plugins.apply 'maven-publish'
-    plugins.apply 'com.gradleup.shadow'
-
-    repositories {
-        mavenCentral()
-        maven { url = uri("https://repo.opencollab.dev/main/") }
-        maven { url = uri("https://api.modrinth.com/maven") }
-    }
-
-    base {
-        archivesName = project.archives_base_name + "-" + project.name
-    }
-    ext.loadProps = { func ->
-        func(
-                "mod_id": project.archives_base_name + "-" + project.name,
-                "version": project.version,
-                "pretty_name": project.pretty_name,
-                "authors": project.authors,
-                "minecraft_version": project.minecraft_version,
-                "floodgate_version": project.floodgate_version,
-                "luckperms_version": project.luckperms_version,
-                "slf4j_version": project.slf4j_version,
-                "toml_version": project.toml_version
-        )
-    }
+apply from: "./common.gradle"
 
 
-    dependencies {
-        compileOnly "org.geysermc.floodgate:api:${project.floodgate_version}"
-        compileOnly "net.luckperms:api:${project.luckperms_version}"
+base {
+    archivesName = project.archives_base_name + "-combined"
+}
 
-        compileOnly "org.projectlombok:lombok:${project.lombok_version}"
-        annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
+loom {
+    runtimeOnlyLog4j = true
+    serverOnlyMinecraftJar()
 
-        compileOnly "org.slf4j:slf4j-api:${project.slf4j_version}"
-
-        implementation "com.moandjiezana.toml:toml4j:${project.toml_version}"
-
-        if (project.name != "common") {
-            implementation project(':common')
+    mods {
+        "geyser-group-link" {
+            sourceSet sourceSets.main
         }
     }
 
-    tasks.withType(JavaCompile).configureEach {
-        it.options.release = 21
-    }
+}
 
-    java {
-        withSourcesJar()
-
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    jar {
-        from("LICENSE") {
-            rename { "${it}_${project.base.archivesName.get()}" }
-        }
-    }
-
-    shadowJar {
-        dependencies {
-            include(project(':common'))
-            include(dependency("com.moandjiezana.toml:toml4j:${project.toml_version}"))
-        }
+fabricApi {
+    configureDataGeneration {
+        client = false
     }
 }
 
-java {
-    withSourcesJar()
+dependencies {
+    // To change the versions see the gradle.properties file
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    // Fabric API. This is technically optional, but you probably want it anyway.
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+    implementation project(":velocity")
+    implementation project(":common")
 }
 
-shadowJar {
-    dependencies {
-        include(project(':common'))
-        include(project(':fabric'))
-        include(project(':velocity'))
+processResources {
+    loadProps(inputs.&properties)
+    filesMatching("fabric.mod.json") {
+        expand(inputs.properties)
     }
 }

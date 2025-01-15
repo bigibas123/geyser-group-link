@@ -42,6 +42,6 @@ public class GeyserGroupLink {
 
     @Subscribe
     public void onLogin(LoginEvent event) {
-        Logic.modifyUserGroups(event.getPlayer().getUniqueId(), logger);
+        Logic.modifyUserGroups(event.getPlayer().getUniqueId(), logger).join();
     }
 }

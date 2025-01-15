@@ -5,7 +5,7 @@
 	"name": "${pretty_name}",
 	"description": "Sorts users into luckperms groups depending on their platform",
 	"authors": [
-		${authors}
+		"${authors}"
 	],
 	"contact": {
 		"sources": "https://github.com/bigibas123/geyser-group-link"

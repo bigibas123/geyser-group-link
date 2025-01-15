@@ -1,4 +1,13 @@
-plugins {
-    id 'java'
-}
+apply from: "../common.gradle"
 
+dependencies {
+    compileOnly "org.geysermc.floodgate:api:${project.floodgate_version}"
+    compileOnly "net.luckperms:api:${project.luckperms_version}"
+
+    compileOnly "org.projectlombok:lombok:${project.lombok_version}"
+    annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
+
+    compileOnly "org.slf4j:slf4j-api:${project.slf4j_version}"
+
+    implementation "com.moandjiezana.toml:toml4j:${project.toml_version}"
+}
