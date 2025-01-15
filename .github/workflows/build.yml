@@ -1,8 +1,3 @@
-# Automatically build the project and run any configured tests for every push
-# and submitted pull request. This can help catch issues that only occur on
-# certain platforms or Java versions, and provides a first line of defence
-# against bad commits.
-
 name: build
 on: [pull_request, push]
 
@@ -21,15 +16,8 @@ jobs:
         with:
           java-version: 21
           distribution: 'adopt'
-      - uses: burrunan/gradle-cache-action@v1
-        name: Cache .gradle
-        with:
-          job-id: geyser-group-link-main-build
-          # Makes all non-main branch builds to use read-only caching
-          read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master' }}
-          arguments: build
-          execution-only-caches: true
-          concurrent: true
+      - name: Build
+        run: ./gradlew build
       - name: Upload combined jar
         uses: actions/upload-artifact@v4
         with:
