@@ -21,6 +21,15 @@ jobs:
         with:
           java-version: 21
           distribution: 'adopt'
+      - uses: burrunan/gradle-cache-action@v1
+        name: Cache .gradle
+        with:
+          job-id: geyser-group-link-main-build
+          # Makes all non-main branch builds to use read-only caching
+          read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/master' }}
+          arguments: build
+          execution-only-caches: true
+          concurrent: true
       - name: Build
         run: ./gradlew build
       - name: Upload combined jar
