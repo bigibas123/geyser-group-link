@@ -54,7 +54,7 @@ def generateTemplates = tasks.register('generateTemplates', Copy) { task ->
 sourceSets.main.java.srcDir(generateTemplates.map { it.outputs })
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = JavaLanguageVersion.of(project.java_version)
+    it.options.release = (project.java_version as Integer)
 }
 
 java {
