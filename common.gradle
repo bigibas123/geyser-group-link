@@ -30,6 +30,7 @@ ext.loadProps = { func ->
             "version": project.version,
             "pretty_name": project.pretty_name,
             "authors": project.authors,
+            "java_version": project.java_version,
             "minecraft_version": project.minecraft_version,
             "floodgate_version": project.floodgate_version,
             "luckperms_version": project.luckperms_version,
@@ -53,14 +54,14 @@ def generateTemplates = tasks.register('generateTemplates', Copy) { task ->
 sourceSets.main.java.srcDir(generateTemplates.map { it.outputs })
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release = 21
+    it.options.release = (project.java_version as Integer)
 }
 
 java {
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaLanguageVersion.of(project.java_version)
+    targetCompatibility = JavaLanguageVersion.of(project.java_version)
 }
 
 jar {
